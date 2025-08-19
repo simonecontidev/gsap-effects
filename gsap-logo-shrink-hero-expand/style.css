@@ -1,0 +1,144 @@
+:root{
+      --bg: #111213;
+      --fg: #ececec;
+      --muted: #a3a3a3;
+      --brand: #53ACF2;
+      --nav-h: clamp(60px, 8vh, 96px);
+      --pad-x: clamp(16px, 5vw, 64px);
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html, body{ height:100%; }
+    body{
+      background: var(--bg);
+      color: var(--fg);
+      font-family: Syne, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    /* NAV - always visible */
+    .nav{
+      position: fixed; inset: 0 0 auto 0;
+      height: var(--nav-h);
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 0 var(--pad-x);
+      z-index: 50;
+      background: rgba(17,18,19,0.55);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav a{
+      position: relative;
+      text-decoration:none; text-transform:uppercase; color:var(--fg);
+      padding: .6rem 1rem; /* +tap area */
+      font-weight:700;
+      font-size: clamp(.72rem, .8vw, .9rem); letter-spacing:.08em;
+      display:inline-block;
+      transition: color .25s ease;
+    }
+    .nav a:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; border-radius:6px; }
+
+    /* underline element driven by CSS var */
+    .nav a::after{
+      content:"";
+      position:absolute; left:10%; right:10%; bottom:-6px; height:2px;
+      background: currentColor; transform-origin: left center;
+      transform: scaleX(var(--u,0)) skewX(-8deg);
+      transition: transform .28s cubic-bezier(.22,.9,.27,1);
+      opacity:.9;
+    }
+
+    /* Centered Logo on top layer — centered inside the navbar */
+    .logo{
+      position: fixed;
+      left: 50%;
+      top: calc(var(--nav-h) / 2);    /* center vertically in nav */
+      transform: translate(-50%, -50%);
+      font-family: "Playfair Display", serif;
+      font-weight: 700;
+      padding: .6rem 1rem;
+      line-height: 1;
+      letter-spacing: .06em;
+      z-index: 60;
+      user-select: none;
+      pointer-events: none;
+      will-change: transform, opacity, letter-spacing;
+    }
+
+    /* Intro: centered below the logo + reveal */
+    .intro{
+      height: clamp(40vh, 54vh, 62vh);
+      display:grid; place-items:center;
+      padding: 0 var(--pad-x);
+      text-align:center;
+    }
+    .intro p{
+      color: var(--muted);
+      font-size: clamp(1rem, 1.3vw, 1.1rem);
+      max-width: 70ch;
+    }
+    .reveal-char{ display:inline-block; transform: translateY(110%); opacity: 0; }
+
+    /* HERO pinned/expanding */
+    .hero{ position: relative; min-height: 140vh; }
+    .hero__inner{ position: relative; height: 100vh; overflow: clip; }
+    .hero__media{ position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; }
+    .hero__img{
+      width: min(85vw, 1200px);
+      aspect-ratio: 16/9;
+      height: auto;
+      object-fit: cover;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transform-origin: center center;
+      will-change: transform, width, border-radius;
+    }
+    .hero__overlay{ position:absolute; inset:0; background: rgba(0,0,0,.0); pointer-events: none; }
+    .hero__title{
+      position: absolute; inset: 0;
+      display: grid; place-items: end center;
+      padding: 20vh var(--pad-x);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      will-change: transform, opacity;
+    }
+    .hero__title h2{
+      font-family: "Playfair Display", serif;
+      font-weight:700;
+      font-size: clamp(1.6rem, 5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: .02em;
+      text-wrap: balance;
+    }
+    .hero__title p{
+      margin-top: .6rem;
+      color: #d6d6d6;
+      font-size: clamp(.95rem, 1.2vw, 1.1rem);
+      max-width: 70ch;
+    }
+
+    /* Content after hero */
+    .content{
+      padding: 8vh var(--pad-x) 16vh;
+      display:grid; gap: 2rem;
+      background: linear-gradient(180deg, rgba(0,0,0,0.25), transparent 30%);
+    }
+    .content h3{
+      font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing:.02em;
+    }
+    .content p{
+      color: var(--muted);
+      max-width: 75ch;
+      font-size: clamp(1rem, 1.2vw, 1.05rem);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 800px){
+      .nav{ backdrop-filter: blur(10px); }
+      .intro{ height: 48vh; }
+      .hero__img{ width: 94vw; border-radius: 12px; }
+    }
