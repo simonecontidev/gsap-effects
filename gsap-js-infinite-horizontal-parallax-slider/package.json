@@ -1,0 +1,16 @@
+{
+  "name": "gsap-js-infinite-horizontal-parallax-slider",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "vite": "^7.0.4"
+  }
+}
