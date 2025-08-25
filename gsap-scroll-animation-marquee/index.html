@@ -9,6 +9,99 @@
     <title>Gsap Scroll Animation Marquee</title>
 </head>
 <body>
-    
+    <section class="spacer"></section>
+
+    <section class="marquee">
+      <div class="marquee__inner">
+        <div class="marquee__part">
+          modern creative studio
+          <div class="arrow">
+            <span class="material-symbols-outlined">arrow_right_alt</span>
+          </div>
+        </div>
+        <div class="marquee__part">
+          modern creative studio
+          <div class="arrow">
+            <span class="material-symbols-outlined">arrow_right_alt</span>
+          </div>
+        </div>
+        <div class="marquee__part">
+          modern creative studio
+          <div class="arrow">
+            <span class="material-symbols-outlined">arrow_right_alt</span>
+          </div>
+        </div>
+        <div class="marquee__part">
+          modern creative studio
+          <div class="arrow">
+            <span class="material-symbols-outlined">arrow_right_alt</span>
+          </div>
+        </div>
+        <div class="marquee__part">
+          modern creative studio
+          <div class="arrow">
+            <span class="material-symbols-outlined">arrow_right_alt</span>
+          </div>
+        </div>
+        <div class="marquee__part">
+          modern creative studio
+          <div class="arrow">
+            <span class="material-symbols-outlined">arrow_right_alt</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="spacer"></section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+      // Track scroll position
+      let currentScroll = 0;
+      let isScrollingDown = true;
+
+      // Select all arrows
+      let arrows = document.querySelectorAll(".arrow");
+
+      // GSAP marquee animation (moves elements horizontally)
+      let tween = gsap
+        .to(".marquee__part", {
+          xPercent: -100,   // move elements horizontally by 100%
+          repeat: -1,       // infinite loop
+          duration: 5,      // speed of animation
+          ease: "linear",   // constant speed
+        })
+        .totalProgress(0.5); // start from middle
+
+      // Position the inner wrapper
+      gsap.set(".marquee__inner", { xPercent: -100 });
+
+      // Listen for scroll events
+      window.addEventListener("scroll", function () {
+        // Detect scroll direction
+        if (window.pageYOffset > currentScroll) {
+          isScrollingDown = true;
+        } else {
+          isScrollingDown = false;
+        }
+
+        // Play animation forward or backward depending on scroll direction
+        gsap.to(tween, {
+          timeScale: isScrollingDown ? 1 : -1,
+        });
+
+        // Rotate arrows based on scroll direction
+        arrows.forEach((arrow) => {
+          if (isScrollingDown) {
+            arrow.classList.remove("active"); // default rotation
+          } else {
+            arrow.classList.add("active"); // rotated 180°
+          }
+        });
+
+        // Update current scroll position
+        currentScroll = window.pageYOffset;
+      });
+    </script>
 </body>
 </html>
