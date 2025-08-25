@@ -1,69 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-    <title>Gsap Horizontal Scroll Slider</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GSAP Horizontal Scroll Slider</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
 </head>
 <body>
-      <nav>
-      <div>
-        <div> Logo</div>
-      </div>
-      <div>Horizontal Scroll</div>
-    </nav>
+  <nav aria-hidden="true">
+    <div><div>Logo</div></div>
+    <div>Horizontal Scroll</div>
+  </nav>
 
-    <div class="marker-wrapper">
-        <div class="slide-title"></div>
-      <div class="marker">
-        <div class="grab"></div>
-      </div>
-      <div class="active-slide">1/10</div>
-    </div>
+  <!-- Marker column + title + counter/controls -->
+  <div class="marker-wrapper" aria-hidden="false">
+    <div class="slide-title"></div>
 
-    <div class="slider">
-      <div class="slider-wrapper">
-        <div class="slide" data-title="First image">
-          <img src="https://images.pexels.com/photos/18071152/pexels-photo-18071152.jpeg" alt="" />
-        </div>
-        <div class="slide" data-title="Second image">
-          <img src="https://images.pexels.com/photos/11476544/pexels-photo-11476544.jpeg" alt="" />
-        </div>
-        <div class="slide" data-title="Third image">
-          <img src="https://images.pexels.com/photos/32425095/pexels-photo-32425095.jpeg" alt="" />
-        </div>
-        <div class="slide" data-title="Fourth image">
-          <img src="https://images.pexels.com/photos/25002429/pexels-photo-25002429.jpeg" alt="" />
-        </div>
-        <div class="slide" data-title="Fifth image">
-          <img src="https://images.pexels.com/photos/27927191/pexels-photo-27927191.jpeg" alt="" />
-        </div>
-        <div class="slide" data-title="Sixth image">
-          <img src="https://images.pexels.com/photos/7614299/pexels-photo-7614299.jpeg" alt="" />
-        </div>
-        <div class="slide" data-title="Seventh image">
-          <img src="https://images.pexels.com/photos/1343537/pexels-photo-1343537.jpeg" alt="" />
-        </div>
-        <div class="slide" data-title="Eightth image">
-          <img src="https://images.pexels.com/photos/13084238/pexels-photo-13084238.jpeg" alt="" />
-        </div>
-        <div class="slide" data-title="Ninth image">
-          <img src="https://images.pexels.com/photos/250591/pexels-photo-250591.jpeg" alt="" />
-        </div>
-        <div class="slide" data-title="Tenth image">
-          <img src="https://images.pexels.com/photos/19390867/pexels-photo-19390867.jpeg" alt="" />
-        </div>
+    <div class="marker">
+      <div class="grab" aria-hidden="true"></div>
+      <div class="marker-circle" aria-hidden="true">
+        <svg viewBox="0 0 40 40" aria-hidden="true">
+          <!-- base ring (always visible, light) -->
+          <circle class="track" cx="20" cy="20" r="18"></circle>
+          <!-- progress ring (stroke-dashoffset animated) -->
+          <circle class="progress" cx="20" cy="20" r="18"></circle>
+        </svg>
       </div>
     </div>
 
-    <footer>
-      <div>Legal Notice</div>
-      <div>Copyright &copy;</div>
-    </footer>
-    
-    <script src="./script.js"></script>
+    <!-- Counter centered near the marker, prev/next appear on hover -->
+    <div class="marker-controls">
+      <button class="btn prev" aria-label="Previous slide">Prev</button>
+      <div class="counter" aria-live="polite" aria-atomic="true">
+        <span class="current">1</span>/<span class="total">10</span>
+      </div>
+      <button class="btn next" aria-label="Next slide">Next</button>
+    </div>
+  </div>
+
+  <!-- Slider -->
+  <div class="slider" role="region" aria-label="Horizontal scroll gallery">
+    <div class="slider-wrapper" role="list">
+      <div class="slide" role="listitem" data-title="First image">
+        <img src="https://images.pexels.com/photos/18071152/pexels-photo-18071152.jpeg"
+             alt="Outdoor portrait with backlight" loading="lazy"/>
+      </div>
+      <div class="slide" role="listitem" data-title="Second image">
+        <img src="https://images.pexels.com/photos/11476544/pexels-photo-11476544.jpeg"
+             alt="Female portrait with soft shadows" loading="lazy"/>
+      </div>
+      <div class="slide" role="listitem" data-title="Third image">
+        <img src="https://images.pexels.com/photos/32425095/pexels-photo-32425095.jpeg"
+             alt="Urban landscape with palm trees" loading="lazy"/>
+      </div>
+      <div class="slide" role="listitem" data-title="Fourth image">
+        <img src="https://images.pexels.com/photos/25002429/pexels-photo-25002429.jpeg"
+             alt="Modern architectural scene" loading="lazy"/>
+      </div>
+      <div class="slide" role="listitem" data-title="Fifth image">
+        <img src="https://images.pexels.com/photos/27927191/pexels-photo-27927191.jpeg"
+             alt="Nature detail in foreground" loading="lazy"/>
+      </div>
+      <div class="slide" role="listitem" data-title="Sixth image">
+        <img src="https://images.pexels.com/photos/7614299/pexels-photo-7614299.jpeg"
+             alt="Indoor environmental portrait" loading="lazy"/>
+      </div>
+      <div class="slide" role="listitem" data-title="Seventh image">
+        <img src="https://images.pexels.com/photos/1343537/pexels-photo-1343537.jpeg"
+             alt="Sea waves against the light" loading="lazy"/>
+      </div>
+      <div class="slide" role="listitem" data-title="Eightth image">
+        <img src="https://images.pexels.com/photos/13084238/pexels-photo-13084238.jpeg"
+             alt="Minimal architectural detail" loading="lazy"/>
+      </div>
+      <div class="slide" role="listitem" data-title="Ninth image">
+        <img src="https://images.pexels.com/photos/250591/pexels-photo-250591.jpeg"
+             alt="Forest with filtered light" loading="lazy"/>
+      </div>
+      <div class="slide" role="listitem" data-title="Tenth image">
+        <img src="https://images.pexels.com/photos/19390867/pexels-photo-19390867.jpeg"
+             alt="City street at sunset" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+
+  <footer aria-hidden="true">
+    <div>Legal Notice</div>
+    <div>Copyright &copy;</div>
+  </footer>
+<script src="./script.js"></script>
 </body>
 </html>
