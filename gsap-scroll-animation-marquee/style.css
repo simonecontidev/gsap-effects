@@ -6,7 +6,7 @@
       }
 
       body {
-        background: #a19f94;
+        background: #ededed;
         font-family: "PP Rader";
       }
 
@@ -19,7 +19,7 @@
       .marquee {
         position: relative;
         background: #0f0f0f;
-        color: #eee;
+        color: #fff;
         padding: 32px 0;
         font-weight: 600;
         font-size: 40px;
