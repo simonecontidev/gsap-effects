@@ -15,7 +15,7 @@
         height: 800px;
       }
 
-      /* Marquee container */
+       /* Marquee outer container */
       .marquee {
         position: relative;
         background: #0f0f0f;
@@ -24,22 +24,21 @@
         font-weight: 600;
         font-size: 40px;
         text-transform: uppercase;
-        overflow: hidden;
+        overflow: hidden; /* hides the overflow while we slide content */
       }
 
-      /* Inner wrapper to hold the moving content */
+      /* Marquee inner track that actually moves left/right */
       .marquee__inner {
         display: flex;
-        width: fit-content;
-        flex: auto;
+        width: fit-content; /* shrink to content width so GSAP xPercent works smoothly */
         flex-direction: row;
       }
 
-      /* Each marquee element */
+      /* Single marquee item (text + arrow) */
       .marquee__part {
         display: flex;
         align-items: center;
-        flex-shrink: 0;
+        flex-shrink: 0;  /* prevent items from shrinking */
         padding: 0 4px;
       }
 
@@ -49,25 +48,29 @@
         align-items: center;
         justify-content: center;
         margin: 0 1em;
-        transform: rotate(0deg); /* Default position */
+        transform: rotate(0deg); /* default rotation */
         transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        line-height: 1; /* Prevent icon from being squeezed vertically */
+        line-height: 1; /* avoid vertical squeeze of the icon */
       }
 
-      /* Style the Google Material Symbol */
+      /* Material icon visual tuning */
       .arrow .material-symbols-outlined {
         display: inline-block;
-        font-size: 80px;            /* Controls arrow size */
+        font-size: 80px; /* arrow size */
         line-height: 1;
         font-variation-settings:
-          'FILL' 0,                 /* 0 = outline, 1 = filled */
-          'wght' 700,               /* Stroke weight */
+          'FILL' 0,   /* 0 = outline, 1 = filled */
+          'wght' 700, /* stroke weight */
           'GRAD' 0,
-          'opsz' 96;                /* Optical size (affects rendering sharpness) */
+          'opsz' 96;  /* optical size for better rendering at big sizes */
         vertical-align: middle;
       }
 
-      /* Rotate the arrow when scrolling up */
-      .arrow.active {
-        transform: rotate(180deg);
+      /* Arrow rotation when scrolling up */
+      .arrow.active { transform: rotate(180deg); }
+
+      /* Small responsive tweak so the arrow isn't huge on small screens */
+      @media (max-width: 640px) {
+        .marquee { font-size: 28px; }
+        .arrow .material-symbols-outlined { font-size: 56px; }
       }

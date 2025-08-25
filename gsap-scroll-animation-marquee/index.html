@@ -9,99 +9,105 @@
     <title>Gsap Scroll Animation Marquee</title>
 </head>
 <body>
-    <section class="spacer"></section>
+      <section class="spacer" aria-hidden="true"></section>
 
-    <section class="marquee">
-      <div class="marquee__inner">
-        <div class="marquee__part">
-          modern creative studio
-          <div class="arrow">
-            <span class="material-symbols-outlined">arrow_right_alt</span>
-          </div>
-        </div>
-        <div class="marquee__part">
-          modern creative studio
-          <div class="arrow">
-            <span class="material-symbols-outlined">arrow_right_alt</span>
-          </div>
-        </div>
-        <div class="marquee__part">
-          modern creative studio
-          <div class="arrow">
-            <span class="material-symbols-outlined">arrow_right_alt</span>
-          </div>
-        </div>
-        <div class="marquee__part">
-          modern creative studio
-          <div class="arrow">
-            <span class="material-symbols-outlined">arrow_right_alt</span>
-          </div>
-        </div>
-        <div class="marquee__part">
-          modern creative studio
-          <div class="arrow">
-            <span class="material-symbols-outlined">arrow_right_alt</span>
-          </div>
-        </div>
-        <div class="marquee__part">
-          modern creative studio
-          <div class="arrow">
-            <span class="material-symbols-outlined">arrow_right_alt</span>
-          </div>
-        </div>
-      </div>
+    <section class="marquee" aria-label="Scrolling announcements">
+      <div class="marquee__inner" id="marqueeTrack"></div>
     </section>
 
-    <section class="spacer"></section>
+    <section class="spacer" aria-hidden="true"></section>
 
+    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script>
-      // Track scroll position
-      let currentScroll = 0;
-      let isScrollingDown = true;
+      // ================================
+      // CONFIG
+      // ================================
+      // Texts to show in the marquee. You can add multiple phrases if needed.
+      const PHRASES = ["Text marquee example"];
+      // How many times to repeat the phrase to ensure seamless scrolling.
+      // Increase if you see gaps; decrease to lighten DOM.
+      const REPEATS = 12;
 
-      // Select all arrows
-      let arrows = document.querySelectorAll(".arrow");
+      // Speed of the marquee animation (seconds for one loop across 100%)
+      const DURATION = 5;
 
-      // GSAP marquee animation (moves elements horizontally)
-      let tween = gsap
-        .to(".marquee__part", {
-          xPercent: -100,   // move elements horizontally by 100%
-          repeat: -1,       // infinite loop
-          duration: 5,      // speed of animation
-          ease: "linear",   // constant speed
-        })
-        .totalProgress(0.5); // start from middle
+      // ================================
+      // DOM BUILDING
+      // ================================
+      const track = document.getElementById("marqueeTrack");
 
-      // Position the inner wrapper
+      // Helper: create a single marquee item (text + arrow)
+      function createMarqueePart(text) {
+        const part = document.createElement("div");
+        part.className = "marquee__part";
+
+        // Text node
+        const label = document.createTextNode(text + " ");
+        part.appendChild(label);
+
+        // Arrow wrapper + icon
+        const arrow = document.createElement("div");
+        arrow.className = "arrow";
+        arrow.setAttribute("aria-hidden", "true"); // decorative
+        const icon = document.createElement("span");
+        icon.className = "material-symbols-outlined";
+        icon.textContent = "arrow_right_alt";
+        arrow.appendChild(icon);
+
+        part.appendChild(arrow);
+        return part;
+      }
+
+      // Build enough items to fill the track and allow a smooth infinite loop
+      for (let i = 0; i < REPEATS; i++) {
+        const phrase = PHRASES[i % PHRASES.length];
+        track.appendChild(createMarqueePart(phrase));
+      }
+
+      // ================================
+      // GSAP MARQUEE
+      // ================================
+      // Create the infinite horizontal translation:
+      // All .marquee__part items move left by 100% continuously
+      const tween = gsap.to(".marquee__part", {
+        xPercent: -100,
+        repeat: -1,
+        duration: DURATION,
+        ease: "linear"
+      }).totalProgress(0.5); // start at the middle of the loop for symmetry
+
+      // Position the track; -100 makes the loop feel centered when starting
       gsap.set(".marquee__inner", { xPercent: -100 });
 
-      // Listen for scroll events
-      window.addEventListener("scroll", function () {
-        // Detect scroll direction
-        if (window.pageYOffset > currentScroll) {
-          isScrollingDown = true;
-        } else {
-          isScrollingDown = false;
-        }
+      // ================================
+      // SCROLL DIRECTION INTERACTION
+      // ================================
+      let currentScroll = window.pageYOffset || 0;
+      let isScrollingDown = true;
+      const arrows = document.querySelectorAll(".arrow");
 
-        // Play animation forward or backward depending on scroll direction
-        gsap.to(tween, {
-          timeScale: isScrollingDown ? 1 : -1,
-        });
+      // On scroll, detect direction and:
+      // - change tween direction (timeScale 1 forward, -1 backward)
+      // - toggle arrow rotation
+      window.addEventListener("scroll", () => {
+        const y = window.pageYOffset || 0;
+        isScrollingDown = y > currentScroll;
 
-        // Rotate arrows based on scroll direction
+        // Play forward when scrolling down, reverse when scrolling up
+        gsap.to(tween, { timeScale: isScrollingDown ? 1 : -1 });
+
+        // Rotate arrow based on direction
         arrows.forEach((arrow) => {
           if (isScrollingDown) {
             arrow.classList.remove("active"); // default rotation
           } else {
-            arrow.classList.add("active"); // rotated 180°
+            arrow.classList.add("active"); // 180° rotation
           }
         });
 
-        // Update current scroll position
-        currentScroll = window.pageYOffset;
-      });
+        currentScroll = y;
+      }, { passive: true });
     </script>
 </body>
 </html>
