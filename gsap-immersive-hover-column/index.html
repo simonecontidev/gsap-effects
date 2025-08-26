@@ -3,10 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- GSAP -->
+     <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+
+      <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="./style.css">
     <title>Immersive Gsap Hover Column</title>
 </head>
 <body>
+    <div class="nav" aria-hidden="true">
+    <div class="nav-item">logo</div>
+    <div class="nav-item">LOREM IPSUM</div>
+    <div class="nav-item">menu</div>
+  </div>
+
+  <div class="items" id="items"></div>
+
+  <!-- IMMERSIVE FULLSCREEN -->
+  <div class="detail" id="detail" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+    <div class="detail-bg">
+      <img class="detail-img" alt="">
+    </div>
+    <button class="detail-close" id="detailClose" aria-label="Close">×</button>
+
+    <div class="detail-layer">
+      <div class="detail-inner">
+        <div class="detail-col-left">
+          <h2 class="detail-title" id="detail-title"></h2>
+          <div class="detail-meta" id="detail-meta"></div>
+          <p class="detail-desc" id="detail-desc"></p>
+          <div class="detail-actions">
+            <button class="btn primary">Inquire / Purchase</button>
+            <button class="btn">View more works</button>
+          </div>
+        </div>
+        <div class="detail-col-right">
+          <div class="detail-id" id="detail-id"></div>
+        </div>
+      </div>
+    </div>
+  </div>
     
     <script src="./script.js"></script>
 </body>
