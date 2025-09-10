@@ -4,10 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
     <title>Gsap O Badge Loading</title>
 </head>
 <body>
+      <!-- Loader -->
+  <div class="loader" aria-label="Loading">
+    <div class="counter-wrap">
+      <div class="counter">0%</div>
+      <div class="ring">
+        <svg width="70" height="70" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="bg" cx="60" cy="60" r="52"></circle>
+          <circle class="fg" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"></circle>
+        </svg>
+      </div>
+    </div>
+    <div class="slit" aria-hidden="true"></div>
+  </div>
+
+  <!-- HERO -->
+  <header class="container" id="hero">
+    <h1 class="title" aria-label="Hi">H<span>i</span></h1>
+    <div class="scroll-hint" aria-hidden="true">
+      <div class="chev"></div>
+      <small>Scroll</small>
+    </div>
+  </header>
+
+  <!-- SECTION 2 -->
+  <section id="about" aria-labelledby="about-title">
+    <div class="grid">
+      <div class="copy">
+        <h2 id="about-title">Lorem ipsum dolor sit amet consectetur adipisicing.</h2>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptates, nisi! Nisi nesciunt labore dolores, recusandae sint dolorum repellendus dicta reiciendis ad nostrum voluptas distinctio illo in, commodi impedit, vel voluptates.
+        </p>
+      </div>
+      <figure class="media">
+        <img src="https://images.pexels.com/photos/27938028/pexels-photo-27938028.jpeg" alt="Rock landscape">
+      </figure>
+    </div>
+  </section>
+
+  <!-- Brand badge (sticky) -->
+  <div class="brand-badge" id="brandBadge" aria-label="Company Name badge">
+    <div class="label">
+      <span>C</span>
+    </div>
+    <div class="ring" id="brandRing" role="button" aria-label="Company Name">
+      <svg width="56" height="56" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="bg" cx="60" cy="60" r="52"></circle>
+        <circle class="fg" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="0"></circle>
+      </svg>
+    </div>
+    <div class="label">
+      <span>mpany Name</span>
+    </div>
+  </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
     <script src="./script.js"></script>
 </body>
 </html>
