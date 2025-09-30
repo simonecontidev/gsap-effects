@@ -75,22 +75,20 @@ function splitToChars(scope) {
    - stagger-flip (3D flip with blur)
    - mask-swipe (clip-path reveal + slide)
 ---------------------------- */
+// 1) Niente blur nelle entrance: rimuovi "filter" da from/to
 function entranceAnimation(root = '#fx') {
   const el = typeof root === 'string' ? document.querySelector(root) : root;
   const effect = (el.getAttribute('data-effect') || 'stagger-float').toLowerCase();
   const chars = el.querySelectorAll('.char');
 
-  // common initial state
   gsap.set(chars, { transformOrigin: '50% 70%' });
 
   let fromVars, toVars, base;
   if (effect === 'stagger-flip') {
-    // 3D flip with blur fade-out
-    fromVars = { opacity: 0, rotationX: -80, y: 20, filter: 'blur(6px)' };
-    toVars   = { opacity: 1, rotationX: 0, y: 0, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' };
+    fromVars = { opacity: 0, rotationX: -80, y: 20 };                // ← no filter
+    toVars   = { opacity: 1, rotationX: 0,   y: 0, duration: 0.65, ease: 'power3.out' };
     base = gsap.timeline();
   } else if (effect === 'mask-swipe') {
-    // mask reveal + slide
     el.querySelectorAll('.fog, .focus').forEach(n => n.classList.add('masked'));
     base = gsap.timeline()
       .to(el.querySelectorAll('.masked'), {
@@ -99,28 +97,51 @@ function entranceAnimation(root = '#fx') {
         ease: 'power2.out',
         stagger: { each: 0.02 }
       }, 0);
-    fromVars = { opacity: 0, y: 18 };
+    fromVars = { opacity: 0, y: 18 };                                 // ← no filter
     toVars   = { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' };
   } else {
     // default: stagger-float
-    fromVars = { opacity: 0, y: 28, rotation: 2, filter: 'blur(5px)' };
-    toVars   = { opacity: 1, y: 0, rotation: 0, filter: 'blur(0px)', duration: 0.7, ease: 'back.out(1.6)' };
+    fromVars = { opacity: 0, y: 28, rotation: 2 };                    // ← no filter
+    toVars   = { opacity: 1, y: 0, rotation: 0, duration: 0.7, ease: 'back.out(1.6)' };
     base = gsap.timeline();
   }
 
-  // Play once when the element enters viewport
   base.fromTo(chars, fromVars, toVars, 0)
     .addLabel('chars')
-    .then(() => {
-      // remove mask class after animation
-      el.querySelectorAll('.masked').forEach(n => n.classList.remove('masked'));
-    });
+    .then(() => el.querySelectorAll('.masked').forEach(n => n.classList.remove('masked')));
 
   ScrollTrigger.create({
     trigger: el,
     start: 'top 80%',
     once: true,
     onEnter: () => base.play(0)
+  });
+}
+
+// 2) Blur SOLO durante lo scroll (evita render anticipato)
+function blurOnScroll(root = '#fx') {
+  gsap.to(root, {
+    '--blur': '9px',
+    ease: 'none',
+    immediateRender: false,   // ← evita che applichi blur prima dell'enter
+    scrollTrigger: {
+      trigger: root,
+      start: 'top 65%',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+
+  gsap.to(root + ' .fog', {
+    opacity: 0.85,
+    ease: 'none',
+    immediateRender: false,   // ← idem
+    scrollTrigger: {
+      trigger: root,
+      start: 'top 65%',
+      end: 'bottom top',
+      scrub: true
+    }
   });
 }
 
@@ -135,7 +156,7 @@ function blurOnScroll(root = '#fx') {
     ease: 'none',
     scrollTrigger: {
       trigger: root,
-      start: 'top 65%',
+      start: 'top 45%',
       end: 'bottom top',
       scrub: true
     }
