@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Gsap Slide Continuum Scroll experience</title>
+</head>
+<body>
+    <section class="sticky">
+    <div class="slider">
+      <div class="slides">
+
+        <!-- SLIDE 1 (intro: full-bleed -> boxed + black frame) -->
+        <div class="slide">
+          <div class="slide-inner" id="introInner" style="--pad:0px;">
+            <div class="media">
+              <img src="https://images.pexels.com/photos/34114421/pexels-photo-34114421.jpeg" alt="Slide 1" />
+              <div class="overlay"></div>
+            </div>
+
+            <div class="title">
+              <h1>The Breath <br>of Earth</h1>
+            </div>
+
+            <div class="content">
+              <span class="eyebrow">Genesis</span>
+              <h2>Where wind shapes the stone and silence learns to speak</h2>
+              <p>A meditation on form and erosion — nature’s slow architecture, carved by air, time, and patience.</p>
+              <div class="actions">
+                <a class="btn" href="#">Explore project</a>
+                <a class="link" href="#">Read Manifesto →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 2 (image) -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="media">
+              <img src="https://images.pexels.com/photos/31821418/pexels-photo-31821418.jpeg" alt="Slide 2" />
+              <div class="overlay"></div>
+            </div>
+
+            <div class="title"><h1>Rivers <br>Remember</h1></div>
+
+            <div class="content">
+              <span class="eyebrow">Water</span>
+              <h2>Movement as memory, shaping everything it touches</h2>
+              <p>The rhythm of current and reflection. Transparent power that polishes mountains and mirrors the sky.</p>
+              <div class="actions">
+                <a class="btn" href="#">View concept</a>
+                <a class="link" href="#">Specs →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 3 (image) -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="media">
+              <img src="https://images.pexels.com/photos/33300358/pexels-photo-33300358.jpeg" alt="Slide 3" />
+              <div class="overlay"></div>
+            </div>
+
+            <div class="title"><h1>Burning <br>Horizon</h1></div>
+
+            <div class="content">
+              <span class="eyebrow">Fire</span>
+              <h2>The language of transformation, written in light and warmth</h2>
+              <p>From flame to dawn, energy translates matter into emotion — revealing the invisible in every color.</p>
+              <div class="actions">
+                <a class="btn" href="#">Explore materials</a>
+                <a class="link" href="#">Moodboard →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SLIDE 4 (image) -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="media">
+              <img src="https://images.pexels.com/photos/29973783/pexels-photo-29973783.jpeg" alt="Slide 5" />
+              <div class="overlay"></div>
+            </div>
+
+            <div class="title"><h1>The Living <br>Geometry</h1></div>
+
+            <div class="content">
+              <span class="eyebrow">Life</span>
+              <h2>Patterns of growth repeat across scales — leaf, coral, city</h2>
+              <p>Every living structure breathes in proportion. The code of nature is symmetry, rhythm, and patience.</p>
+              <div class="actions">
+                <a class="btn" href="#">Learn more</a>
+                <a class="link" href="#">Credits →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.slides -->
+    </div><!-- /.slider -->
+  </section>
+
+  <section class="outro">
+    <h1>The mountain doesn’t move, yet everything flows around it. Solidity is not absence — it’s pure presence.</h1>
+  </section>
+    
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.19/dist/lenis.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>

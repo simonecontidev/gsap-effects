@@ -1,0 +1,269 @@
+/* ===============================
+       Tunable parameters
+       =============================== */
+    :root{
+      --base-pad: 32px;          /* final boxed padding (first slide animates 0 -> this) */
+      --frameY-final: 24px;      /* final black frame thickness (top/bottom) */
+      --overlay: 0.35;           /* overlay opacity (0..1) over image/video for readability */
+    }
+
+    /* ===============================
+       Reset & page
+       =============================== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: "Gilroy", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overscroll-behavior: none;
+      background: #141414;
+      /* Hide scrollbar but keep scroll working */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+
+    /* ===============================
+       Sections
+       =============================== */
+    section {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    section.sticky { background: #b4aea7; }
+
+    section.outro {
+      background: #141414;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .outro h1 {
+      color: #fff;
+      text-transform: uppercase;
+      font-size: clamp(28px, 8vw, 60px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: .9;
+    }
+
+    /* ===============================
+       Slider layout
+       =============================== */
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    .slides {
+      position: relative;
+      height: 100%;
+      display: flex;
+      will-change: transform;
+      transform: translateX(0) translateZ(0);
+      backface-visibility: hidden;
+      contain: paint;
+    }
+
+    .slide {
+      position: relative;
+      flex: 0 0 100vw;
+      height: 100%;
+      transform: translateZ(0);
+      padding: 20px;
+    }
+
+    /* Inner wrapper controls boxed layout (animated on first slide) */
+    .slide-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: var(--pad, var(--base-pad)); /* first slide animates from 0 -> --base-pad */
+    }
+
+    /* ===============================
+       Media (image/video) + overlay + frame
+       =============================== */
+    .media {
+      position: absolute;
+      inset: calc(-8vw - var(--pad, var(--base-pad)));
+      overflow: hidden;
+      transform: translateZ(0);
+      z-index: 0; /* beneath overlay/frame/text */
+    }
+
+    @media (min-width: 768px) {
+      .media { inset: calc(-4vw - var(--pad, var(--base-pad))); }
+    }
+
+    .media img,
+    .media video {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      will-change: transform, scale;
+      transform: translateX(0) scale(1.35);
+      backface-visibility: hidden;
+      display: block;
+    }
+
+    /* Black overlay for readability over image/video */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, var(--overlay));
+      z-index: 2; /* above media, below frame and text */
+      pointer-events: none;
+    }
+
+    /* Black frame (top/bottom) – grows only on first slide during intro */
+    .slide-inner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3; /* above overlay, below text */
+      --frameY: 0px; /* animated 0 -> --frameY-final via JS (first slide only) */
+      background:
+        linear-gradient(#000, #000) top / 100% var(--frameY) no-repeat,
+        linear-gradient(#000, #000) bottom / 100% var(--frameY) no-repeat;
+    }
+
+    /* ===============================
+       Text blocks (no text-shadow)
+       =============================== */
+    .title {
+      position: relative;
+      width: max-content;
+      margin: 0;
+      z-index: 4;
+    }
+
+    .title h1 {
+      color: #fff;
+      text-transform: uppercase;
+      font-size: clamp(36px, 9vw, 85px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: .9;
+      will-change: transform;
+      transform: translateY(-200px); /* animated to 0 on active slide */
+    }
+
+    .content {
+      position: absolute;
+      left: clamp(16px, 5vw, 64px);
+      bottom: clamp(16px, 6vh, 96px);
+      max-width: min(560px, 86vw);
+      z-index: 4;
+      color: #fff;
+      display: grid;
+      gap: .9rem;
+      /* no text-shadow for ultimate crispness */
+    }
+
+    .eyebrow {
+      font-size: .8rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      opacity: .98;
+    }
+
+    .content h2 {
+      font-size: clamp(20px, 5.2vw, 40px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      overflow: hidden;
+    }
+
+    .line {
+      display: block;
+      transform: translateY(120%);
+      opacity: 0;
+    }
+
+    .content p {
+      font-size: clamp(14px, 3.6vw, 18px);
+      line-height: 1.5;
+      opacity: .98;
+      max-width: 56ch;
+    }
+
+    .actions {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: .25rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: .7rem 1.1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .14);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, .3);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: .02em;
+      transition: all .25s ease;
+    }
+
+    .btn:hover   { background: rgba(255, 255, 255, .25); transform: translateY(-2px); }
+    .btn:active  { transform: translateY(0); }
+    .btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+    .link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      height: 2px;
+      width: 100%;
+      background: #fff;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .35s ease;
+    }
+
+    .link:hover::after { transform: scaleX(1); }
+
+    /* Crisp text rendering */
+    .content, .content * {
+      filter: none !important;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* iOS safe areas inside boxed padding */
+    @supports (padding: env(safe-area-inset-top)) {
+      .slide-inner{
+        padding-left:  calc(var(--pad, var(--base-pad)) + env(safe-area-inset-left));
+        padding-right: calc(var(--pad, var(--base-pad)) + env(safe-area-inset-right));
+      }
+    }
